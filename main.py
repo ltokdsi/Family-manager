@@ -67,9 +67,14 @@ def main():
                 parts = today_input.split('.')
                 if (len(parts) == 3 and parts[0].isdigit() and
                         parts[1].isdigit() and parts[2].isdigit()):
-                    current_date_number =(
-                        utilities.date_to_number(today_input))
-                    break
+                    day = int(parts[0])
+                    month = int(parts[1])
+                    year = int(parts[2])
+                    if 1 <= month <= 12 and 1 <= day <= 31:
+                        current_date_number = utilities.date_to_number(today_input)
+                        break
+                    else:
+                        print('Ошибка! В месяце 1-12, а дней 1-31!')
                 else:
                     print('Введите дату корректно в формате '
                           'ДД.ММ.ГГГГ, например 01.01.2026')
