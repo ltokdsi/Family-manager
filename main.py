@@ -40,7 +40,8 @@ def main():
      отображающая меню, обрабатывающая выбор пользователя"""
     original_data = utilities.read_tasks('family_tasks.txt')
     if original_data is None:
-        print('Не удалось найти файл с данными! Проверьте его наличие')
+        print('Не удалось найти файл с данными! Проверьте его '
+              'наличие')
         return
     if not original_data:
         print('Файл пустой! Проверьте содержимое файла')
@@ -71,7 +72,8 @@ def main():
                     month = int(parts[1])
                     year = int(parts[2])
                     if 1 <= month <= 12 and 1 <= day <= 31:
-                        current_date_number = utilities.date_to_number(today_input)
+                        current_date_number = \
+                            (utilities.date_to_number(today_input))
                         break
                     else:
                         print('Ошибка! В месяце 1-12, а дней 1-31!')
@@ -103,12 +105,14 @@ def main():
 
             filtered = []
             for task in working_tasks:
-                task_date = utilities.date_to_number(task['дата_выдачи'])
+                task_date = (
+                    utilities.date_to_number(task['дата_выдачи']))
                 if current_date_number - task_date < number_of_days:
                     if current_date_number >= task_date:
                         filtered.append(task)
             shell_sorting.shell_sort(filtered, logic.compare_report_1)
-            print_tasks(filtered, f'Задачи за последние {number_of_days} дней')
+            print_tasks(filtered, f'Задачи за последние '
+                                  f'{number_of_days} дней')
 
         elif user_choice == '2':
             print('Отчет 2. Проваленные задачи')
@@ -135,7 +139,8 @@ def main():
                         f'Проваленные задачи исполнителя {name}')
 
         elif user_choice == '3':
-            print('Отчет 3. Активные задачи (получена или в процессе)')
+            print('Отчет 3. Активные задачи (получена или '
+                  'в процессе)')
             filtered = []
             for current_task in working_tasks:
                 current_status = current_task['статус']
@@ -147,7 +152,8 @@ def main():
             print_tasks(filtered, 'Список активных задач')
 
         elif user_choice == '4':
-            print_tasks(original_data, 'Исхдный список без сортировок')
+            print_tasks(original_data, 'Исхдный список '
+                                       'без сортировок')
 if __name__ == '__main__':
     main()
 
