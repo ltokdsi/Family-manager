@@ -82,7 +82,7 @@ def add_new_task(filename, current_tasks):
             print('Отмена записи')
             return
         if not utilities.validate_name(name):
-            print('Имя должно содерать только буквы!')
+            print('Имя должно содержать только буквы!')
             continue
         final_name = ""
         found = False
