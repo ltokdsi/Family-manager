@@ -107,7 +107,7 @@ def add_new_task(filename, current_tasks):
                     final_name = None
                     break
                 else:
-                    print('Неккоректный ввод! Введити y или n.'
+                    print('Некорректный ввод! Введите y или n.'
                           ' (или 0 для отмены)')
             if final_name:
                 break
@@ -203,3 +203,4 @@ def delete_task(filename, tasks):
                 print('Задачи с таким номером не существует')
         except ValueError:
             print('Ошибка! Введите целое число!')
+
