@@ -115,10 +115,12 @@ def main():
                     all_names.append(names)
             while True:
                 print(f"Доступные имена: {', '.join(all_names)}")
-                name = input('Введите имя члена семьи: ').strip()
+                name = input('Введите имя члена семьи:'
+                             ' (0 для отмены) ').strip()
                 if name == '0':
+                    print('Действие отменено')
                     break
-                if name.lower() in ['мама','папа','саша']:
+                if name.lower() in all_names:
                     break
                 else:
                     print('Некорректное имя! Попробуйте снова')
