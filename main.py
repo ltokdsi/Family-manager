@@ -108,9 +108,14 @@ def main():
 
         elif user_choice == '2':
             print('Отчет 2. Проваленные задачи')
+            all_names = []
+            for task in original_data:
+                names = task['исполнитель'].lower()
+                if names not in all_names:
+                    all_names.append(names)
             while True:
-                name = input('Введите имя члена семьи( мама, папа, '
-                             'Саша или 0 для отмены): ').strip()
+                print(f"Доступные имена: {', '.join(all_names)}")
+                name = input('Введите имя члена семьи: ').strip()
                 if name == '0':
                     break
                 if name.lower() in ['мама','папа','саша']:
