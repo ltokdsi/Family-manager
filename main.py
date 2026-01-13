@@ -2,15 +2,17 @@ import copying
 import logic
 import shell_sorting
 import utilities
+import data_editor
+
 
 def print_tasks(tasks, tittle):
     """Универсальная функция для вывода списка задач"""
     print(tittle)
     if not tasks:
-        print("Список пуст или задачи не найдены")
+        print('Список пуст или задачи не найдены')
     else:
         for count, task in enumerate(tasks,1):
-            print(f"{count}.{task['дата_выдачи']} "
+            print(f"{count}){task['дата_выдачи']} "
                   f"{task['время_выдачи']} -> "
                   f"{task['дата_выполнения']} "
                   f"{task['время_выполнения']} | "
@@ -27,28 +29,26 @@ def show_menu():
     print('2. Отчет 2: Проваленные задачи')
     print('3. Отчет 3: Активные задачи (получена или в процессе)')
     print('4. Просмотреть исходный список')
-    print('5. Выход из программы')
+    print('5. Добавить новую задачу')
+    print('6. Удалить существующую задачу')
+    print('7. Выход из программы')
 
     while True:
-        choice = input('Выберите действие (1-5): ').strip()
-        if choice in ['1','2','3','4','5']:
+        choice = input('Выберите действие (1-7): ').strip()
+        if choice in ['1','2','3','4','5','6','7']:
             return choice
-        print('Некорректный ввод! Введите число от 1 до 5')
+        print('Некорректный ввод! Введите число от 1 до 7')
 
 def main():
     """Главная функция программы "Семейный менеджер",
      отображающая меню, обрабатывающая выбор пользователя"""
     original_data = utilities.read_tasks('family_tasks.txt')
-    if original_data is None:
-        print('Не удалось найти файл с данными! Проверьте его '
-              'наличие')
-        return
     if not original_data:
-        print('Файл пустой! Проверьте содержимое файла')
-        return
+        print('База данных сейчас пуста. Но вы можете использовать '
+              'пункт 5, чтобы добавить задачи')
     while True:
         user_choice = show_menu()
-        if user_choice == '5':
+        if user_choice == '7':
             print('Программа успешно завершена! До свидания!')
             break
 
@@ -64,22 +64,14 @@ def main():
                 if today_input == '0':
                     current_date_number = None
                     break
-
-                parts = today_input.split('.')
-                if (len(parts) == 3 and parts[0].isdigit() and
-                        parts[1].isdigit() and parts[2].isdigit()):
-                    day = int(parts[0])
-                    month = int(parts[1])
-                    year = int(parts[2])
-                    if 1 <= month <= 12 and 1 <= day <= 31:
-                        current_date_number = \
-                            (utilities.date_to_number(today_input))
-                        break
-                    else:
-                        print('Ошибка! В месяце 1-12, а дней 1-31!')
+                if utilities.validate_date(today_input):
+                    current_date_number = (
+                        utilities.date_to_number(today_input))
+                    break
                 else:
-                    print('Введите дату корректно в формате '
-                          'ДД.ММ.ГГГГ, например 01.01.2026')
+                    print('Ошибка! Введите дату корректно в формате '
+                          '(ДД.ММ.ГГГГ). Помните: в месяце 1-12, '
+                          'а дней 1-31! Год от 1900 до 2100!')
             if today_input == '0':
                 continue
 
@@ -111,8 +103,8 @@ def main():
                     if current_date_number >= task_date:
                         filtered.append(task)
             shell_sorting.shell_sort(filtered, logic.compare_report_1)
-            print_tasks(filtered, f'Задачи за последние '
-                                  f'{number_of_days} дней')
+            print_tasks(filtered, f"Задачи за последние "
+                                  f"{number_of_days} дней")
 
         elif user_choice == '2':
             print('Отчет 2. Проваленные задачи')
@@ -154,8 +146,13 @@ def main():
         elif user_choice == '4':
             print_tasks(original_data, 'Исхдный список '
                                        'без сортировок')
+        elif user_choice == '5':
+            (data_editor.add_new_task
+             ('family_tasks.txt', original_data))
+            original_data = utilities.read_tasks('family_tasks.txt')
+
+        elif user_choice == '6':
+            original_data = data_editor.delete_task('family_tasks.txt'
+                                                    , original_data)
 if __name__ == '__main__':
     main()
-
-
-
