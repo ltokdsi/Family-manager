@@ -187,7 +187,7 @@ def delete_task(filename, tasks):
                 print('Удаление отменено')
                 return tasks
             choice = int(user_input)
-            if 0 < choice <=len(tasks):
+            if 0 < choice <= len(tasks):
                 removed = tasks.pop(choice - 1)
                 if utilities.save_all_tasks(filename, tasks):
                     print(f"Запись  {choice}){removed['исполнитель']}"
@@ -197,3 +197,4 @@ def delete_task(filename, tasks):
                 print('Задачи с таким номером не существует')
         except ValueError:
             print('Ошибка! Введите целое число!')
+
