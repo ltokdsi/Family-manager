@@ -1,8 +1,17 @@
 def date_to_number(date_str):
     """Функция конвертации строкового представления даты в числовое
     для сравнения"""
-    day, month, year = date_str.split('.')
-    return int(year) * 10000 + int(month) * 100 + int(day)
+    parts = date_str.split('.')
+    day = int(parts[0])
+    month = int(parts[1])
+    year = int(parts[2])
+    total_days = year * 365 + (year // 4)
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
+                     30, 31]
+    for month_index in range(1, month):
+        total_days += days_in_month[month_index]
+    total_days += day
+    return total_days
 
 def read_tasks(filename):
     """Функция чтения базы данных из текстового файла"""
@@ -29,13 +38,13 @@ def read_tasks(filename):
                         tasks.append(task_dictionary)
     except FileNotFoundError:
         print('Файл не найден! Создаю новую базу данных')
-        with open(filename, 'w', encoding='utf-8') as file:
+        with open(filename, 'w', encoding='utf-8') :
             pass
         return []
     return tasks
 
 def add_task_to_file(filename, task):
-    """Добавление строки в файл"""
+    """Функция добавления строки в файл"""
     try:
         try:
             with open(filename, 'r', encoding='utf-8') as file:
@@ -45,9 +54,9 @@ def add_task_to_file(filename, task):
             is_empty = True
         with open(filename, 'a', encoding='utf-8') as file:
             if is_empty:
-                prefix = ""
+                prefix = ''
             else:
-                prefix = "\n"
+                prefix = '\n'
             line = (f"{prefix}{task['дата_выдачи']};"
                     f"{task['время_выдачи']};"
                     f"{task['дата_выполнения']};"
@@ -62,7 +71,7 @@ def add_task_to_file(filename, task):
 
 
 def save_all_tasks(filename, tasks):
-    """Полная перезапись файла (для удаления)"""
+    """Функция полной перезаписи файла (для удаления)"""
     try:
         with open(filename, 'w', encoding='utf-8') as file:
             for task in tasks:
@@ -79,7 +88,7 @@ def save_all_tasks(filename, tasks):
         return False
 
 def validate_date(date_str):
-    """Проверка на реальность даты"""
+    """Функция для проверки на реальность даты"""
     try:
         parts = date_str.split('.')
         if len(parts) != 3:
@@ -100,7 +109,7 @@ def validate_date(date_str):
         return False
 
 def validate_time(time_str):
-    """Проверка формата ЧЧ:ММ и реальность времени"""
+    """Функция проверки формата ЧЧ:ММ и реальности времени"""
     try:
         if ':' not in time_str:
             return False
@@ -116,7 +125,7 @@ def validate_time(time_str):
         return False
 
 def validate_name(name):
-    """Проверяет, что имя состоит только из букв"""
+    """Функция проверки, что имя состоит только из букв"""
     cleaned_name = name.replace(' ', '')
     if not cleaned_name:
         return False
