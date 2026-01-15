@@ -120,8 +120,8 @@ def main():
                         all_names.append(names)
                 while True:
                     print(f"Доступные имена: {', '.join(all_names)}")
-                    name = input('Введите имя члена семьи:'
-                                 ' (0 для отмены) ').strip()
+                    name = input('Введите имя члена семьи'
+                                 ' (0 для отмены): ').strip()
                     if name == '0':
                         print('Действие отменено')
                         break
@@ -141,7 +141,7 @@ def main():
                 shell_sorting.shell_sort(filtered,
                                          logic.compare_report_2)
                 print_tasks(filtered,
-                            f'Проваленные задачи исполнителя {name}')
+                            f"Проваленные задачи исполнителя {name}")
 
             elif user_choice == '3':
                 print('Отчет 3. Активные задачи (получена или '
@@ -157,7 +157,7 @@ def main():
                 print_tasks(filtered, 'Список активных задач')
 
             elif user_choice == '4':
-                print_tasks(original_data, 'Исхдный список '
+                print_tasks(original_data, 'Исходный список '
                                            'без сортировок')
             elif user_choice == '5':
                 (data_editor.add_new_task
