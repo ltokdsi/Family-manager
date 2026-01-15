@@ -4,7 +4,8 @@ import utilities
 def add_new_task(filename, current_tasks):
     """Функция для добавления новой задачи в базу данных"""
     print('Добавление новой задачи')
-    # дата выдачи
+    final_name = ''
+
     date_out = input('Дата выдачи (ДД.ММ.ГГГГ) '
                      '(или 0 для отмены): ').strip()
     if date_out == '0':
@@ -16,7 +17,6 @@ def add_new_task(filename, current_tasks):
         if date_out == '0':
             return print('Отмена записи')
 
-    # время выдачи
     time_out = input('Время выдачи (ЧЧ:ММ) '
                      '(или 0 для отмены): ').strip()
     if time_out == '0':
@@ -27,7 +27,6 @@ def add_new_task(filename, current_tasks):
         if time_out == '0':
             return print('Отмена записи')
 
-    # дата исполнения
     date_of_completion = input('Дата исполнения (ДД.ММ.ГГГГ) '
                                '(или 0 для отмены): ').strip()
     if date_of_completion == '0':
@@ -39,7 +38,6 @@ def add_new_task(filename, current_tasks):
         if date_of_completion == '0':
             print('Отмена записи')
 
-    # время исполнения
     execution_time = input('Время исполнения (ЧЧ:ММ) '
                            '(или 0 для отмены): ').strip()
     if execution_time == '0':
@@ -51,7 +49,7 @@ def add_new_task(filename, current_tasks):
         if execution_time == '0':
             return print('Отмена записи')
 
-    # проверка логики дат
+    # Проверка логики дат
     date_out_num = utilities.date_to_number(date_out)
     date_comp_num = utilities.date_to_number(date_of_completion)
     if date_comp_num < date_out_num:
@@ -68,7 +66,6 @@ def add_new_task(filename, current_tasks):
             print('Запись отменена')
             return
 
-    # исполнитель
     while True:
         display_names = []
         for task in current_tasks:
@@ -84,7 +81,6 @@ def add_new_task(filename, current_tasks):
         if not utilities.validate_name(name):
             print('Имя должно содержать только буквы!')
             continue
-        final_name = ""
         found = False
         for task in current_tasks:
             original_name = task['исполнитель']
@@ -121,7 +117,6 @@ def add_new_task(filename, current_tasks):
             print(f"Исполнитель определен как: {final_name}")
             break
 
-    # описание
     description = (
         input('Введите описание задачи (что нужно сделать)'
               ' (или 0 для отмены): ').strip())
@@ -135,7 +130,6 @@ def add_new_task(filename, current_tasks):
             print('Отмена записи')
             return
 
-    # статус
     while True:
         print('\nВыберите статус задачи:')
         print('1. получена (по умолчанию)')
@@ -203,4 +197,3 @@ def delete_task(filename, tasks):
                 print('Задачи с таким номером не существует')
         except ValueError:
             print('Ошибка! Введите целое число!')
-
